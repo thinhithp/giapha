@@ -1,0 +1,444 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<%
+'Ham kiem tra dau nhay don
+Function CheckString(s,endChar)    
+	pos=InStr(s,"'")
+	While pos>0
+		s=Mid(s,1,pos)&"'"&Mid(s,pos+1)
+		pos=InStr(pos+2,s,"'")
+	Wend
+	CheckString="'"&s&"'"&endChar
+End Function
+'----------------------------------------------------------------
+Function CheckBool(s,endChar)    
+	CheckBool=s&endChar
+End Function
+'-----------------------------------------------------------------
+'Ham them cap dau nhay kep bao noi dung chuoi s
+Function QuoteStr(s)
+	If isNull(s) Then
+		QuoteStr=Chr(34)&Chr(34)
+	else
+		QuoteStr=Chr(34)&CStr(s)&Chr(34)
+	End if
+End Function
+'-----------------------------------------------------------------
+Function Check2Quote(s,typefun)
+	on Error resume next
+	if typefun="encode" then
+	s = Replace(s, CHR(34), "&quot;")
+	else
+	s = Replace(s, "&quot;", CHR(34))
+	End if
+	Check2Quote=s
+End Function
+'-----------------------------------------------------------------
+'Ham giu nguyen cac gia tri xuong dong
+function FormatStr(fString)        
+	on Error resume next
+	fString = Replace(fString, CHR(13), "")
+	fString = Replace(fString, CHR(10) & CHR(10), "</P><P>")
+	fString = Replace(fString, CHR(10), "<BR>")
+	FormatStr = fString
+end function
+'-----------------------------------------------------------------
+Function GetValue(TableName,NameField,condition)
+	GetValue=""
+	if isNull(condition) or condition="" then condition="true"
+	Set rsF= Server.CreateObject("ADODB.Recordset")
+	sql = "SELECT " & NameField & " as FieldAlias FROM " & TableName & " WHERE " & condition
+	On Error Resume Next
+		rsF.Open sql, ketnoi
+		If not rsF.EOF and not rsF.BOF Then GetValue=rsF("FieldAlias") End If
+		rsF.Close
+	On Error Goto 0
+End Function
+'---------------------------------------------------------------
+Function CountMax(TableName,condition)
+	CountMax=""
+	if isNull(condition) or condition="" then condition="true"
+	Set rsF= Server.CreateObject("ADODB.Recordset")
+	sql = "SELECT COUNT(*) AS cMax FROM " & TableName & " WHERE " & condition
+	On Error Resume Next
+		rsF.Open sql, ketnoi
+		If not rsF.EOF and not rsF.BOF Then CountMax=rsF("cMax") End If
+		rsF.Close
+	On Error Goto 0
+End Function
+'---------------------------------------------------------------
+function FormatNum(num)
+If num<>"" and not InStr(num,".") then
+	num=CStr(num)	
+	lenStr=Len(num)
+	if lenStr=9 then
+		num=Left(num,3)&"."&mid(num,4,3)&"."&Right(num,3)
+	elseif lenStr>6 and lenStr<9 then
+		num=Left(num,lenStr-6)&"."&mid(num,lenStr-5,3)&"."&Right(num,3)
+	elseif lenStr=6 then
+		num=Left(num,3)&"."&Right(num,3)
+	elseif lenStr>3 and lenStr<6 then
+		num=Left(num,lenStr-3)&"."&Right(num,3)
+	else 'nothing
+	End if
+End if
+	FormatNum=num
+end Function
+'-----------------------------------------------------------------
+'Ham cat bo khoang trang o dau va cuoi chuoi
+Function ConvertNull(varTemp) 
+	If IsNull(varTemp) then
+		ConvertNull=""
+	Else
+		ConvertNull=Trim(varTemp)
+	End if
+End function
+'-----------------------------------------------------------------
+Private Function formatInput(ByVal strInputEntry)
+
+	'Get rid of malicous code in the message
+	strInputEntry = Replace(strInputEntry, "'", "&#146;", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "script", "&#115;cript", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "SCRIPT", "&#083;CRIPT", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Script", "&#083;cript", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "script", "&#083;cript", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "object", "&#111;bject", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "OBJECT", "&#079;BJECT", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Object", "&#079;bject", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "object", "&#079;bject", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "applet", "&#097;pplet", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "APPLET", "&#065;PPLET", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Applet", "&#065;pplet", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "applet", "&#065;pplet", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "embed", "&#101;mbed", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "EMBED", "&#069;MBED", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Embed", "&#069;mbed", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "embed", "&#069;mbed", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "event", "&#101;vent", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "EVENT", "&#069;VENT", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Event", "&#069;vent", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "event", "&#069;vent", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "document", "&#100;ocument", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "DOCUMENT", "&#068;OCUMENT", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Document", "&#068;ocument", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "document", "&#068;ocument", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "cookie", "&#099;ookie", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "COOKIE", "&#067;OOKIE", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Cookie", "&#067;ookie", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "cookie", "&#067;ookie", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "form", "&#102;orm", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "FORM", "&#070;ORM", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Form", "&#070;orm", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "form", "&#070;orm", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "iframe", "i&#102;rame", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "IFRAME", "I&#070;RAME", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Iframe", "I&#102;rame", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "iframe", "i&#102;rame", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "textarea", "&#116;extarea", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "TEXTAREA", "&#84;EXTAREA", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Textarea", "&#84;extarea", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "textarea", "&#84;extarea", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "input", "&#073;nput", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "Input", "&#073;nput", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "INPUT", "&#073;nput", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "input", "&#073;nput", 1, -1, 1)
+
+	'Reformat a few bits
+	strInputEntry = Replace(strInputEntry, "<STR&#079;NG>", "<strong>", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "<str&#111;ng>", "<strong>", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "</STR&#079;NG>", "</strong>", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "</str&#111;ng>", "</strong>", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "f&#111;nt", "font", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "F&#079;NT", "FONT", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "F&#111;nt", "Font", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "f&#079;nt", "font", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "f&#111;nt", "font", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "m&#111;no", "mono", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "M&#079;NO", "MONO", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "M&#079;no", "Mono", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "m&#079;no", "mono", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "m&#111;no", "mono", 1, -1, 1)
+
+	'Return
+	formatInput = strInputEntry
+End Function
+
+'********************************************
+'*** 		 Format SQL input	*****
+'********************************************
+
+'Format SQL Query funtion
+Private Function formatSQLInput(ByVal strInputEntry)
+
+	If strInputEntry=Null then
+		formatSQLInput = ""
+	Else
+	'Remove malisous charcters from links and images
+	strInputEntry = Replace(strInputEntry, "<", "&lt;")
+	strInputEntry = Replace(strInputEntry, ">", "&gt;")
+	strInputEntry = Replace(strInputEntry, """", "", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "=", "&#061;", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "'", "''", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "select", "sel&#101;ct", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "join", "jo&#105;n", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "union", "un&#105;on", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "where", "wh&#101;re", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "insert", "ins&#101;rt", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "delete", "del&#101;te", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "update", "up&#100;ate", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "like", "lik&#101;", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "drop", "dro&#112;", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "create", "cr&#101;ate", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "modify", "mod&#105;fy", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "rename", "ren&#097;me", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "alter", "alt&#101;r", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "cast", "ca&#115;t", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "form", "", 1, -1, 1)
+
+	'Return
+	formatSQLInput = strInputEntry
+	End if
+End Function
+'*********************************************
+'***  	   Decode HTML encoding		 *****
+'*********************************************
+
+'Decode encoded strings
+Private Function decodeString(ByVal strInputEntry)
+
+	'Remove malisous charcters from links and images
+	strInputEntry = Replace(strInputEntry, "&#061;", "=", 1, -1, 0)
+
+	strInputEntry = Replace(strInputEntry, "&#097;", "a", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#098;", "b", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#099;", "c", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#100;", "d", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#101;", "e", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#102;", "f", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#103;", "g", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#104;", "h", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#105;", "i", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#106;", "j", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#107;", "k", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#108;", "l", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#109;", "m", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#110;", "n", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#111;", "o", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#112;", "p", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#113;", "q", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#114;", "r", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#115;", "s", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#116;", "t", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#117;", "u", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#118;", "v", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#119;", "w", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#120;", "x", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#121;", "y", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#122;", "z", 1, -1, 0)
+
+	strInputEntry = Replace(strInputEntry, "&#065;", "A", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#066;", "B", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#067;", "C", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#068;", "D", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#069;", "E", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#070;", "F", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#071;", "G", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#072;", "H", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#073;", "I", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#074;", "J", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#075;", "K", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#076;", "L", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#077;", "M", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#078;", "N", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#079;", "O", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#080;", "P", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#081;", "Q", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#082;", "R", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#083;", "S", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#084;", "T", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#085;", "U", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#086;", "V", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#087;", "W", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#088;", "X", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#089;", "Y", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#090;", "Z", 1, -1, 0)
+
+
+	strInputEntry = Replace(strInputEntry, "&#048;", "0", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#049;", "1", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#050;", "2", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#051;", "3", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#052;", "4", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#053;", "5", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#054;", "6", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#055;", "7", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#056;", "8", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&#057;", "9", 1, -1, 0)
+	
+	strInputEntry = Replace(strInputEntry, "&lt;", "<", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&gt;", ">", 1, -1, 0)
+	strInputEntry = Replace(strInputEntry, "&amp;", "&", 1, -1, 0)
+
+	'Return
+	decodeString = strInputEntry
+End Function
+'////////////////////////////////////////////////////////////
+function filterChar(ByVal strInputEntry)
+	strInputEntry = Replace(strInputEntry, "(", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, ")", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "*", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, ":", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "+", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "=", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "-", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "/", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "\", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "|", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "&", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "^", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "#", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "$", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "?", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, ";", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, ",", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "<", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, ">", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, """", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "'", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "[", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "]", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "{", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "}", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "!", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "%", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, vbNewLine, " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "●", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "   ", " ", 1, -1, 1)
+	strInputEntry = Replace(strInputEntry, "  ", " ", 1, -1, 1)
+	
+	filterChar = strInputEntry
+End function
+'-----------------------------------------------------------------------------------
+function addMail(intGroup,strName,strMail)
+	on error resume next
+	strSQL = "SELECT mail_email FROM tb_email WHERE mail_email='" & Trim(strEmail) & "'"
+	Set RSm = ketnoi.Execute(strSQL)
+	If RSm.EOF and RSm.BOF then
+		addMail = false
+	Else
+		Randomize Timer
+		strMailCode = Left(strMail,2) & (9876989856 * CInt((RND * 32000) + 100))
+		strSQL = "INSERT INTO tb_email(mail_group,mail_name,mail_email,mail_code) VALUES("
+		strSQL = strSQL & intGroup & ",'" & strName & "','" & strMail & "','" & strMailCode & "')"
+		ketnoi.Execute(strSQL)
+		addMail = True
+	End if
+	RSm.Close
+	Set RSm = nothing
+End Function
+'-----------------------------------------------------------------
+'Doi ngay thang sang dang dd/mm/yyyy
+Function CDay(dayval)
+	If dayval<>"" then
+		CDay=Day(dayval) &"/" &Month(dayval) &"/" &Year(dayval)
+	Else
+		CDay=""
+	End if
+End Function
+'-----------------------------------------------------------------
+'Doi ngay thang sang dang dd/mm/yyyy
+Function EDay(dayval)
+	If dayval<>"" then
+		EDay=Month(dayval) & "/" & Day(dayval) & "/" & Year(dayval)
+	Else
+		EDay=""
+	End if
+End Function
+'---------------------------------------------------------------------------
+Function GetIntro(text,length)
+	If Len(text)>length Then
+		xpos=InStr(length,text," ")
+		If xpos>0 Then
+			GetIntro=Left(text,xpos)
+		Else	
+			xpos=InStr(length-10,text," ")	
+			If xpos>0 Then
+				GetIntro=Left(text,xpos)
+			Else
+				GetIntro=Left(text,length)
+			End If
+		End If
+		GetIntro=GetIntro &"..."
+	Else
+		GetIntro=text
+	End If
+End Function
+'-----------------------------------------------------------------
+function FilterContent(strNguon)
+	strNguon = Replace(strNguon,"10pt","12px")
+	strNguon = Replace(strNguon,"11pt","12px")
+	strNguon = Replace(strNguon,"12pt","12px")
+	strNguon = Replace(strNguon,"11px","12px")
+	strNguon = Replace(strNguon,"size=2","style='font-size:12px'")
+	strNguon = Replace(strNguon,"SIZE=2","style='font-size:12px'")
+	strNguon = Replace(strNguon,"size = 2","style='font-size:12px'")
+	strNguon = Replace(strNguon,"Tahoma","Arial")
+	strNguon = Replace(strNguon,"Verdana","Arial")
+	strNguon = Replace(strNguon,"size=+0","style='font-size:12px'")		
+	FilterContent=strNguon
+End function
+'-----------------------------------------------------------------
+sub doWriteFile(strCau,filename,extname)
+On Error Resume Next
+	NewLine = CHR(13)&CHR(10)
+	Set fs = CreateObject("Scripting.FileSystemObject")
+	Set a = fs.CreateTextFile(filename+"."&extname,True,False)
+	a.WriteLine strCau & NewLine
+	a.Close
+	Exit sub
+	if err then Response.Write "Error!!!"
+End sub
+'--------------------------------------------------------------------------
+
+'-----------------------------------------------------------------------------------------------
+'Ham loai bo the <DIV> bao doan van ban
+function remDIV(strText)
+	pos1 = InStr(strText,">")
+	pos2 = InstrRev(strText,"</DIV>")
+	If pos1>0 and pos2>0 then
+		strText = mid(strText,pos1+1,pos2-pos1-1)
+	End if
+	remDIV = strText
+End function
+'------------------------------------------------------------------------------
+set objcon = Server.CreateObject("ADODB.Connection")
+objcon.Open ketnoi
+Function CountSum(TableName,condition)
+	CountSum=""
+	if isNull(condition) or condition="" then condition="true"
+	sql = "SELECT Sum(COUNTER) AS TotalCounter FROM " & TableName & " WHERE " & condition
+	On Error Resume Next
+		set rsSum=Server.CreateObject("ADODB.Recordset")
+		rsSum.Open sql, objcon
+		If not rsSum.EOF and not rsSum.BOF Then CountSum=rsSum("TotalCounter") End If
+		rsSum.Close
+	On Error Goto 0
+End Function
+
+function addMail(intGroup,strName,strMail)
+	on error resume next
+	strSQL = "SELECT mail_email FROM tb_email WHERE mail_email='" & Trim(strEmail) & "'"
+	Set RSm = ketnoi.Execute(strSQL)
+	If RSm.EOF and RSm.BOF then
+		addMail = false
+	Else
+		Randomize Timer
+		strMailCode = Left(strMail,2) & (9876989856 * CInt((RND * 32000) + 100))
+		strSQL = "INSERT INTO tb_email(mail_group,mail_name,mail_email,mail_code) VALUES("
+		strSQL = strSQL & intGroup & ",'" & strName & "','" & strMail & "','" & strMailCode & "')"
+		ketnoi.Execute(strSQL)
+		addMail = True
+	End if
+	RSm.Close
+	Set RSm = nothing
+End Function
+%>

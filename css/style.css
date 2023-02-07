@@ -1,0 +1,53 @@
+﻿@font-face {
+    font-family: 'myriadpro-regular-webfont';
+    src: url('fonts/myriadpro-regular-webfont.eot');
+    src: url('fonts/myriadpro-regular-webfontd41d.eot?#iefix') format('embedded-opentype'),
+         url('fonts/myriadpro-regular-webfont.html') format('woff'),
+         url('fonts/myriadpro-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'myriadpro-semiboldcond-webfont';
+    src: url('fonts/myriadpro-semiboldcond-webfont.eot');
+    src: url('fonts/myriadpro-semiboldcond-webfontd41d.eot?#iefix') format('embedded-opentype'),
+         url('fonts/myriadpro-semiboldcond-webfont.html') format('woff'),
+         url('fonts/myriadpro-semiboldcond-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.giapha {font-size:36px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif;font-weight:bold;}
+.giapha1 {font-size:20px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif;}
+.giapha10 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif;}
+.dangxem {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.giapha30 {font-size:18px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.giapha20 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.giapha2 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.giapha2:hover {font-size:20px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tieudetin {font-size:24px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc:hover {font-size:20px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc1 {font-size:17px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none; text-align:justify}
+.xemtrang {font-size:18px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.xemtrang:hover {font-size:18px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.phaky {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif;}
+.tintuc2 {font-size:19px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc20 {font-size:19px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc3 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc4 {font-size:19px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.tintuc4:hover {font-size:19px;color:#981606;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.image{border:1px solid #CCCCCC;padding:3px;}
+.image1{border:1px solid #000000;padding:3px;}
+.thuvienanh {font-size:19px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none; text-align:center; display: block; margin-top: 2px;}
+.thuvienanh:hover {font-size:19px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none; text-align:center; display: block; margin-top: 2px;}
+.thuvienanh1 {font-size:19px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none; text-align:center; display: block; margin-top: 2px;}
+.thuvienanh1:hover {font-size:19px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none; text-align:center; display: block; margin-top: 2px;}
+.thuvienanh2 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.divOnTop{bottom: 0px; z-index:1; position:absolute; width:591; height:38}
+.timkiem {font-size:18px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.xemdoi2 {font-size:20px;color:#000000;font-family:'myriadpro-semiboldcond-webfont',sans-serif; text-decoration:none}
+.xemdoi1 {font-size:20px;color:#115088;font-family:'myriadpro-semiboldcond-webfont',sans-serif; font-weight:bold; text-decoration:none}
+.xemdoi {font-size:20px;color:#115088;font-family:'myriadpro-semiboldcond-webfont',sans-serif; font-weight:bold; text-decoration:none}
+.xemdoi:hover {font-size:20px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; font-weight:bold; text-decoration:none}
+.doithu {font-size:20px;color:#dd1800;font-family:'myriadpro-semiboldcond-webfont',sans-serif; font-weight:bold; text-decoration:none}

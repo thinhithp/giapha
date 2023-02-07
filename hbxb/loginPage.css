@@ -1,0 +1,42 @@
+HTML {height:100%}
+BODY {margin: 0px; height:100%}
+.actr {text-align:center}
+.aleft {text-align:left}
+.aright {text-align:right}
+
+.WelcomeLayout {width:45%;}
+.WelcomeLayout .text {text-transform:uppercase; font-family: Arial, Tahoma, Verdana; font-weight:700; font-size:18pt; 
+	color: #494949; text-align:center; width:400px; float:right;
+}
+
+.VerticalSeparator {width:12px; background: url(../images/Common/line_sep.gif) no-repeat center}
+
+.LoginLayout .FailMessage {border:1px solid #FFCC00; background-color:#FFFFC4; color:#FF0000; width:430px; 
+	margin:0px 0px 20px 20px; text-align:center; font-weight: 700;
+}
+.LoginLayout .FailMessage .text {padding: 10px;}
+
+.LoginLayout {font-family: Arial, Tahoma, Verdana; font-size: 9pt;}
+.LoginLayout form {margin:0px}
+.LoginLayout .textbox {border: 1px solid #cccccc; height:22px; width:160px}
+.LoginLayout .button {border: 1px solid #bababa; background-color:#d5d8da; font-family:Tahoma, Verdana; 
+	color:#5d5d5d; font-size:11px; font-weight: 700; height: 25px;
+}
+.LoginLayout .formMain {border: 1px solid #cccccc; background-color:#f1f3f5; width:430px; height:235px; margin-left:20px}
+.LoginLayout .formMain .content {margin:20px 25px 20px 20px}
+.LoginLayout .formMain .content .leftPanel {width:155px; margin-left:15px; float:right; height:190px}
+.LoginLayout .formMain .content .leftPanel .secureIcon {background: url(computer_secure.gif) no-repeat top center; width:120px; height:80px}
+
+.LoginLayout .formMain .content .rightPanel {width:200px; height:190px; margin:0px; float:left;
+	background-color:#e9ecef; border:1px solid #cccccc;
+}
+.LoginLayout .formMain .content .rightPanel .label {font-weight:700; margin:15px 0px 2px 15px}
+.LoginLayout .formMain .content .rightPanel .textfield {margin:0px 0px 3px 15px}
+.LoginLayout .formMain .content .rightPanel .AutoLogin {overflow: hidden; width:100%; margin: 10px 0px 3px 11px;}
+.LoginLayout .formMain .content .rightPanel .AutoLogin .chkbox {float:left; width:20px}
+.LoginLayout .formMain .content .rightPanel .AutoLogin .textlabel {float:left; margin: 2px 3px 3px 0px; width:150px}
+.LoginLayout .formMain .content .rightPanel .buttonLine {margin:15px 0px 10px 15px}
+
+.copyright {font-family:Tahoma, Verdana, Arial; font-size:11px; text-align:center; width:470px; margin-top:5px; color:#999999}
+.copyright a {color:#999999; text-decoration:none; font-weight:700}
+.copyright a:hover {color:#cc0000;}
